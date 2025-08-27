@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico Gama - Centro de Diagnóstico por Imágenes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        medical: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e'
+                        },
+                        accent: {
+                            50: '#ecfdf5',
+                            500: '#10b981',
+                            600: '#059669'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .hero-pattern {
+            background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-medical-50 to-blue-50 min-h-screen">
+    <!-- Public View -->
+    <div id="publicView" class="view">
+        <!-- Header -->
+        <header class="glass-effect shadow-lg sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center">
+                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl font-bold text-medical-800">Diagnóstico Gama</h1>
+                            <p class="text-sm text-medical-600">Diagnóstico por Imágenes</p>
+                        </div>
+                    </div>
+                    
+                    <nav class="hidden md:flex space-x-8">
+                        <a href="#inicio" class="text-medical-700 hover:text-medical-900 font-medium transition-colors">Inicio</a>
+                        <a href="#servicios" class="text-medical-700 hover:text-medical-900 font-medium transition-colors">Servicios</a>
+                        <a href="#citas" class="text-medical-700 hover:text-medical-900 font-medium transition-colors">Turnos</a>
+                        <a href="#contacto" class="text-medical-700 hover:text-medical-900 font-medium transition-colors">Sedes</a>
+                    </nav>
+
+                    <div class="flex items-center space-x-4">
+                        <button onclick="showModal('loginModal')" class="bg-medical-500 hover:bg-medical-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                            Acceso Staff
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section id="inicio" class="relative bg-gradient-to-r from-medical-600 to-medical-800 py-20">
+            <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="text-white">
+                        <h2 class="text-5xl font-bold mb-6 drop-shadow-lg">Diagnóstico por Imágenes de Vanguardia</h2>
+                        <p class="text-xl text-gray-100 mb-8 drop-shadow-md">Tecnología de última generación en diagnóstico por imágenes. Ahora podés visualizar y compartir tus estudios digitalmente con tu médico.</p>
+                        <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                            <button onclick="showModal('appointmentModal')" class="bg-white text-medical-600 px-8 py-4 rounded-xl font-semibold hover:bg-gray-100 transition-colors shadow-lg">
+                                Solicitar Turno
+                            </button>
+                            <button onclick="showModal('shareStudyModal')" class="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-medical-600 transition-colors backdrop-blur-sm">
+                                Compartir Estudio
+                            </button>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <div class="bg-white bg-opacity-10 rounded-3xl p-8 backdrop-blur-md border border-white border-opacity-20 shadow-2xl">
+                            <div class="grid grid-cols-2 gap-6">
+                                <div class="text-center text-white">
+                                    <div class="text-3xl font-bold drop-shadow-lg">4</div>
+                                    <div class="text-sm text-gray-200 drop-shadow-md">Sedes en Tucumán</div>
+                                </div>
+                                <div class="text-center text-white">
+                                    <div class="text-3xl font-bold drop-shadow-lg">3.0T</div>
+                                    <div class="text-sm text-gray-200 drop-shadow-md">Resonancia Digital</div>
+                                </div>
+                                <div class="text-center text-white">
+                                    <div class="text-3xl font-bold drop-shadow-lg">100%</div>
+                                    <div class="text-sm text-gray-200 drop-shadow-md">Digital Directo</div>
+                                </div>
+                                <div class="text-center text-white">
+                                    <div class="text-3xl font-bold drop-shadow-lg">SAR</div>
+                                    <div class="text-sm text-gray-200 drop-shadow-md">Centro Enseñanza</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="servicios" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h3 class="text-4xl font-bold text-medical-800 mb-4">Nuestros Servicios</h3>
+                    <p class="text-xl text-gray-600">Tecnología de vanguardia en diagnóstico por imágenes</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-gradient-to-br from-medical-50 to-medical-100 rounded-2xl p-8 card-hover">
+                        <div class="w-16 h-16 bg-medical-500 rounded-2xl flex items-center justify-center mb-6">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <h4 class="text-xl font-semibold text-medical-800 mb-4">Resonancia Digital Philips 3.0T</h4>
+                        <p class="text-gray-600 mb-6">El resonador más avanzado del mundo ahora en Tucumán. Único equipo 100% Digital Directo, de alto campo con túnel ancho para mayor confort.</p>
+                        <button onclick="showModal('appointmentModal')" class="text-medical-600 font-semibold hover:text-medical-800 transition-colors">
+                            Solicitar turno →
+                        </button>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-accent-50 to-accent-100 rounded-2xl p-8 card-hover">
+                        <div class="w-16 h-16 bg-accent-500 rounded-2xl flex items-center justify-center mb-6">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                            </svg>
+                        </div>
+                        <h4 class="text-xl font-semibold text-medical-800 mb-4">Residencia Médica SAR</h4>
+                        <p class="text-gray-600 mb-6">Centro de Enseñanza de Médicos Especialistas de la Sociedad Argentina de Radiología. Educación médica continua en diagnóstico por imágenes.</p>
+                        <button onclick="showModal('appointmentModal')" class="text-accent-600 font-semibold hover:text-accent-800 transition-colors">
+                            Más información →
+                        </button>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-8 card-hover">
+                        <div class="w-16 h-16 bg-purple-500 rounded-2xl flex items-center justify-center mb-6">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </div>
+                        <h4 class="text-xl font-semibold text-medical-800 mb-4">Nueva Sede en Aguilares</h4>
+                        <p class="text-gray-600 mb-6">Ubicada en 24 de Septiembre 840, con la más completa y moderna tecnología en el sur de la provincia. Ecografía, Radiografía Digital, Tomografía y Resonancia.</p>
+                        <button onclick="showModal('appointmentModal')" class="text-purple-600 font-semibold hover:text-purple-800 transition-colors">
+                            Solicitar turno →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Digital Studies Section -->
+        <section class="py-20 bg-gradient-to-br from-accent-50 to-accent-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h3 class="text-4xl font-bold text-medical-800 mb-6">Compartir Estudio Digital</h3>
+                    <p class="text-xl text-gray-700 max-w-4xl mx-auto">
+                        Ahora, en vez de retirar tus estudios impresos y llevarlos al médico, podés visualizarlos en forma digital y compartirlos con el profesional. Además quedarán archivados en tu Portal de Pacientes de forma digital para que los consultes en cualquier momento.
+                    </p>
+                </div>
+                <div class="text-center">
+                    <button onclick="showModal('shareStudyModal')" class="bg-accent-500 hover:bg-accent-600 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-colors shadow-lg">
+                        Acceder a Portal de Pacientes
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Appointment Section -->
+        <section id="citas" class="py-20 bg-gradient-to-r from-medical-500 to-medical-600">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h3 class="text-4xl font-bold text-white mb-6">¿Necesitas un estudio?</h3>
+                <p class="text-xl text-blue-100 mb-8">Solicitá tu turno de forma rápida y sencilla</p>
+                <button onclick="showModal('appointmentModal')" class="bg-white text-medical-600 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-gray-100 transition-colors">
+                    Solicitar Turno Ahora
+                </button>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contacto" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h3 class="text-4xl font-bold text-medical-800 mb-4">Nuestras Sedes</h3>
+                    <p class="text-xl text-gray-600">4 ubicaciones estratégicas en Tucumán</p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                    <!-- Sede Maipú -->
+                    <div class="bg-white rounded-3xl shadow-lg overflow-hidden">
+                        <div class="bg-gradient-to-r from-medical-500 to-medical-600 p-6 text-white">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 bg-white bg-opacity-20 rounded-xl flex items-center justify-center">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold">Maipú 747</h4>
+                                    <p class="text-blue-100">Barrio Norte</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <div class="bg-gray-50 rounded-xl p-4">
+                                <h5 class="font-semibold text-medical-800 mb-3">Radiografías & Tomografías</h5>
+                                <div class="flex items-center justify-between text-sm">
+                                    <span class="text-gray-600">Lunes a Viernes</span>
+                                    <span class="font-medium text-medical-700">8:00 - 22:00</span>
+                                </div>
+                                <div class="flex items-center justify-between text-sm mt-1">
+                                    <span class="text-gray-600">Sábados</span>
+                                    <span class="font-medium text-medical-700">8:00 - 12:00</span>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gray-50 rounded-xl p-4">
+                                <h5 class="font-semibold text-medical-800 mb-3">Gammagrafía</h5>
+                                <div class="flex items-center justify-between text-sm">
+                                    <span class="text-gray-600">Lunes a Viernes</span>
+                                    <span class="font-medium text-medical-700">8:00 - 14:00</span>
+                                </div>
+                                <div class="flex items-center justify-between text-sm mt-1">
+                                    <span class="text-gray-600">Sábados</span>
+                                    <span class="font-medium text-medical-700">8:00 - 12:00</span>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gray-50 rounded-xl p-4">
+                                <h5 class="font-semibold text-medical-800 mb-3">PET-CT</h5>
+                                <div class="flex items-center justify-between text-sm">
+                                    <span class="text-gray-600">Lunes a Viernes</span>
+                                    <span class="font-medium text-medical-700">9:00 - 20:00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sede Santa Fe -->
+                    <div class="bg-white rounded-3xl shadow-lg overflow-hidden">
+                        <div class="bg-gradient-to-r from-accent-500 to-accent-600 p-6 text-white">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 bg-white bg-opacity-20 rounded-xl flex items-center justify-center">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold">Santa Fe 738</h4>
+                                    <p class="text-green-100">Barrio Norte</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <div class="bg-gray-50 rounded-xl p-4">
+                                <h5 class="font-semibold text-medical-800 mb-3">Ecografías</h5>
+                                <div class="flex items-center justify-between text-sm">
+                                    <span class="text-gray-600">Lunes a Viernes</span>
+                                    <span class="font-medium text-accent-700">8:00 - 21:00</span>
+                                </div>
+                                <div class="flex items-center justify-between text-sm mt-1">
+                                    <span class="text-gray-600">Sábados</span>
+                                    <span class="font-medium text-accent-700">8:00 - 12:00</span>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gray-50 rounded-xl p-4">
+                                <h5 class="font-semibold text-medical-800 mb-3">Eco Doppler</h5>
+                                <div class="flex items-center justify-between text-sm">
+                                    <span class="text-gray-600">Lunes a Viernes</span>
+                                    <span class="font-medium text-accent-700">8:00 - 19:00</span>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gray-50 rounded-xl p-4">
+                                <h5 class="font-semibold text-medical-800 mb-3">Mamografías & Densitometría</h5>
+                                <div class="flex items-center justify-between text-sm">
+                                    <span class="text-gray-600">Lunes a Viernes</span>
+                                    <span class="font-medium text-accent-700">8:00 - 20:00</span>
+                                </div>
+                                <div class="flex items-center justify-between text-sm mt-1">
+                                    <span class="text-gray-600">Sábados</span>
+                                    <span class="font-medium text-accent-700">8:00 - 12:00</span>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gray-50 rounded-xl p-4">
+                                <h5 class="font-semibold text-medical-800 mb-3">Resonancias</h5>
+                                <div class="flex items-center justify-between text-sm">
+                                    <span class="text-gray-600">Lunes a Viernes</span>
+                                    <span class="font-medium text-accent-700">7:00 - 22:00</span>
+                                </div>
+                                <div class="flex items-center justify-between text-sm mt-1">
+                                    <span class="text-gray-600">Sábados</span>
+                                    <span class="font-medium text-accent-700">7:00 - 19:00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sede Las Piedras -->
+                    <div class="bg-white rounded-3xl shadow-lg overflow-hidden">
+                        <div class="bg-gradient-to-r from-purple-500 to-purple-600 p-6 text-white">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 bg-white bg-opacity-20 rounded-xl flex items-center justify-center">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold">Las Piedras 645</h4>
+                                    <p class="text-purple-100">Barrio Sur</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="bg-gray-50 rounded-xl p-4">
+                                <h5 class="font-semibold text-medical-800 mb-3">Todos los Servicios</h5>
+                                <div class="text-center">
+                                    <div class="inline-flex items-center space-x-2 bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm font-medium">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        <span>Lunes a Viernes: 8:00 - 20:00</span>
+                                    </div>
+                                </div>
+                                <div class="mt-4 grid grid-cols-2 gap-2 text-sm text-gray-600">
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-2 h-2 bg-purple-400 rounded-full"></div>
+                                        <span>Radiografías</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-2 h-2 bg-purple-400 rounded-full"></div>
+                                        <span>Ecografías</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-2 h-2 bg-purple-400 rounded-full"></div>
+                                        <span>Eco Doppler</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-2 h-2 bg-purple-400 rounded-full"></div>
+                                        <span>Tomografías</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2 col-span-2 justify-center">
+                                        <div class="w-2 h-2 bg-purple-400 rounded-full"></div>
+                                        <span>Resonancias</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sede Aguilares -->
+                    <div class="bg-white rounded-3xl shadow-lg overflow-hidden">
+                        <div class="bg-gradient-to-r from-orange-500 to-orange-600 p-6 text-white">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 bg-white bg-opacity-20 rounded-xl flex items-center justify-center">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold">24 de Septiembre 840</h4>
+                                    <p class="text-orange-100">Aguilares</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="bg-gray-50 rounded-xl p-4">
+                                <h5 class="font-semibold text-medical-800 mb-3">Todos los Servicios</h5>
+                                <div class="text-center">
+                                    <div class="inline-flex items-center space-x-2 bg-orange-100 text-orange-800 px-4 py-2 rounded-full text-sm font-medium">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        <span>Lunes a Viernes: 8:00 - 20:00</span>
+                                    </div>
+                                </div>
+                                <div class="mt-4 grid grid-cols-2 gap-2 text-sm text-gray-600">
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-2 h-2 bg-orange-400 rounded-full"></div>
+                                        <span>Radiografías</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-2 h-2 bg-orange-400 rounded-full"></div>
+                                        <span>Ecografías</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-2 h-2 bg-orange-400 rounded-full"></div>
+                                        <span>Eco Doppler</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-2 h-2 bg-orange-400 rounded-full"></div>
+                                        <span>Tomografías</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2 col-span-2 justify-center">
+                                        <div class="w-2 h-2 bg-orange-400 rounded-full"></div>
+                                        <span>Resonancias</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div>
+                        <h3 class="text-3xl font-bold text-medical-800 mb-6">Información de Contacto</h3>
+                        <div class="space-y-6">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-medical-100 rounded-xl flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-medical-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-medical-800">Teléfono Central</p>
+                                    <p class="text-gray-600">(0381) 424-9999</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-accent-100 rounded-xl flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-medical-800">Email</p>
+                                    <p class="text-gray-600">info@diagnosticogama.com.ar</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-medical-800">Web</p>
+                                    <p class="text-gray-600">www.diagnosticogama.com.ar</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-2xl p-8">
+                        <h4 class="text-2xl font-semibold text-medical-800 mb-6">Envíanos un mensaje</h4>
+                        <form class="space-y-4">
+                            <div>
+                                <input type="text" placeholder="Nombre completo" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-medical-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <input type="email" placeholder="Correo electrónico" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-medical-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <textarea rows="4" placeholder="Mensaje" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-medical-500 focus:border-transparent"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-medical-500 hover:bg-medical-600 text-white py-3 rounded-xl font-semibold transition-colors">
+                                Enviar Mensaje
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Staff View -->
+    <div id="staffView" class="view hidden">
+        <!-- Staff Header -->
+        <header class="glass-effect shadow-lg sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 gradient-bg rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl font-bold text-medical-800">Panel Médico</h1>
+                            <p class="text-sm text-medical-600">Sistema de Gestión</p>
+                        </div>
+                    </div>
+                    
+                    <nav class="hidden md:flex space-x-8">
+                        <button onclick="showStaffSection('dashboard')" class="staff-nav-btn text-medical-700 hover:text-medical-900 font-medium transition-colors">Dashboard</button>
+                        <button onclick="showStaffSection('patients')" class="staff-nav-btn text-medical-700 hover:text-medical-900 font-medium transition-colors">Pacientes</button>
+                        <button onclick="showStaffSection('appointments')" class="staff-nav-btn text-medical-700 hover:text-medical-900 font-medium transition-colors">Citas</button>
+                        <button onclick="showStaffSection('diagnostics')" class="staff-nav-btn text-medical-700 hover:text-medical-900 font-medium transition-colors">Diagnósticos</button>
+                    </nav>
+
+                    <div class="flex items-center space-x-4">
+                        <button onclick="logout()" class="text-medical-600 hover:text-medical-800 transition-colors">
+                            Cerrar Sesión
+                        </button>
+                        <div class="w-8 h-8 bg-medical-500 rounded-full flex items-center justify-center">
+                            <span class="text-white font-semibold text-sm">DR</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Staff Dashboard -->
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div id="staff-dashboard" class="staff-section">
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-medical-600 text-sm font-medium">Citas Hoy</p>
+                                <p class="text-3xl font-bold text-medical-800">12</p>
+                                <p class="text-accent-500 text-sm">+3 pendientes</p>
+                            </div>
+                            <div class="w-12 h-12 bg-medical-100 rounded-xl flex items-center justify-center">
+                                <svg class="w-6 h-6 text-medical-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-medical-600 text-sm font-medium">Pacientes Activos</p>
+                                <p class="text-3xl font-bold text-medical-800">248</p>
+                                <p class="text-accent-500 text-sm">+12 este mes</p>
+                            </div>
+                            <div class="w-12 h-12 bg-accent-100 rounded-xl flex items-center justify-center">
+                                <svg class="w-6 h-6 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-medical-600 text-sm font-medium">Diagnósticos</p>
+                                <p class="text-3xl font-bold text-medical-800">89</p>
+                                <p class="text-orange-500 text-sm">5 pendientes</p>
+                            </div>
+                            <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
+                                <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-medical-600 text-sm font-medium">Ingresos</p>
+                                <p class="text-3xl font-bold text-medical-800">$24.5K</p>
+                                <p class="text-accent-500 text-sm">Este mes</p>
+                            </div>
+                            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2">
+                        <div class="bg-white rounded-2xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-medical-800 mb-6">Acciones Rápidas</h3>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <button onclick="showModal('newPatientModal')" class="p-4 bg-medical-50 hover:bg-medical-100 rounded-xl transition-colors text-center group">
+                                    <div class="w-12 h-12 bg-medical-500 rounded-xl mx-auto mb-3 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                                        </svg>
+                                    </div>
+                                    <p class="font-medium text-medical-800">Nuevo Paciente</p>
+                                </button>
+
+                                <button onclick="showModal('newAppointmentModal')" class="p-4 bg-accent-50 hover:bg-accent-100 rounded-xl transition-colors text-center group">
+                                    <div class="w-12 h-12 bg-accent-500 rounded-xl mx-auto mb-3 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                        </svg>
+                                    </div>
+                                    <p class="font-medium text-medical-800">Nueva Cita</p>
+                                </button>
+
+                                <button onclick="showModal('newDiagnosticModal')" class="p-4 bg-purple-50 hover:bg-purple-100 rounded-xl transition-colors text-center group">
+                                    <div class="w-12 h-12 bg-purple-500 rounded-xl mx-auto mb-3 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                        </svg>
+                                    </div>
+                                    <p class="font-medium text-medical-800">Diagnóstico</p>
+                                </button>
+
+                                <button class="p-4 bg-orange-50 hover:bg-orange-100 rounded-xl transition-colors text-center group">
+                                    <div class="w-12 h-12 bg-orange-500 rounded-xl mx-auto mb-3 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                        </svg>
+                                    </div>
+                                    <p class="font-medium text-medical-800">Reportes</p>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="bg-white rounded-2xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-medical-800 mb-6">Próximas Citas</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center space-x-3 p-3 bg-medical-50 rounded-xl">
+                                    <div class="w-10 h-10 bg-medical-500 rounded-full flex items-center justify-center">
+                                        <span class="text-white font-semibold text-sm">AM</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="font-medium text-medical-800">Ana Martínez</p>
+                                        <p class="text-sm text-medical-600">10:30 AM - Consulta</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center space-x-3 p-3 bg-accent-50 rounded-xl">
+                                    <div class="w-10 h-10 bg-accent-500 rounded-full flex items-center justify-center">
+                                        <span class="text-white font-semibold text-sm">JL</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="font-medium text-medical-800">José López</p>
+                                        <p class="text-sm text-medical-600">11:15 AM - Seguimiento</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other staff sections would go here -->
+            <div id="staff-patients" class="staff-section hidden">
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h2 class="text-2xl font-bold text-medical-800 mb-6">Gestión de Pacientes</h2>
+                    <p class="text-gray-600">Sección de pacientes del staff...</p>
+                </div>
+            </div>
+
+            <div id="staff-appointments" class="staff-section hidden">
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h2 class="text-2xl font-bold text-medical-800 mb-6">Gestión de Citas</h2>
+                    <p class="text-gray-600">Sección de citas del staff...</p>
+                </div>
+            </div>
+
+            <div id="staff-diagnostics" class="staff-section hidden">
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h2 class="text-2xl font-bold text-medical-800 mb-6">Sistema de Diagnósticos</h2>
+                    <p class="text-gray-600">Sección de diagnósticos del staff...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-medical-800">Acceso Staff</h3>
+                <button onclick="hideModal('loginModal')" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <form onsubmit="login(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-medical-700 mb-2">Usuario</label>
+                    <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-medical-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-medical-700 mb-2">Contraseña</label>
+                    <input type="password" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-medical-500 focus:border-transparent">
+                </div>
+                <div class="flex space-x-3 pt-4">
+                    <button type="button" onclick="hideModal('loginModal')" class="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="flex-1 px-4 py-3 bg-medical-500 hover:bg-medical-600 text-white rounded-xl transition-colors">
+                        Ingresar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Appointment Modal -->
+    <div id="appointmentModal" class="modal fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-2xl p-8 max-w-lg w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-medical-800">Agendar Cita</h3>
+                <button onclick="hideModal('appointmentModal')" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <form class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-medical-700 mb-2">Nombre</label>
+                        <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-medical-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-medical-700 mb-2">Apellido</label>
+                        <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-medical-500 focus:border-transparent">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-medical-700 mb-2">Teléfono</label>
+                    <input type="tel" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-medical-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-medical-700 mb-2">Tipo de Consulta</label>
+                    <select required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-medical-500 focus:border-transparent">
+                        <option value="">Seleccionar...</option>
+                        <option>Consulta General</option>
+                        <option>Diagnóstico</option>
+                        <option>Seguimiento</option>
+                        <option>Urgencia</option>
+                    </select>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-medical-700 mb-2">Fecha Preferida</label>
+                        <input type="date" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-medical-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-medical-700 mb-2">Hora Preferida</label>
+                        <select required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-medical-500 focus:border-transparent">
+                            <option value="">Seleccionar...</option>
+                            <option>9:00 AM</option>
+                            <option>10:00 AM</option>
+                            <option>11:00 AM</option>
+                            <option>2:00 PM</option>
+                            <option>3:00 PM</option>
+                            <option>4:00 PM</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-medical-700 mb-2">Motivo de la consulta</label>
+                    <textarea rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-medical-500 focus:border-transparent" placeholder="Describe brevemente el motivo de tu consulta..."></textarea>
+                </div>
+                <div class="flex space-x-3 pt-4">
+                    <button type="button" onclick="hideModal('appointmentModal')" class="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="flex-1 px-4 py-3 bg-medical-500 hover:bg-medical-600 text-white rounded-xl transition-colors">
+                        Agendar Cita
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Share Study Modal -->
+    <div id="shareStudyModal" class="modal fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-medical-800">Portal de Pacientes</h3>
+                <button onclick="hideModal('shareStudyModal')" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-accent-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
+                    </svg>
+                </div>
+                <p class="text-gray-600">Accedé a tus estudios digitales y compartílos con tu médico de forma segura.</p>
+            </div>
+            
+            <form class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-medical-700 mb-2">DNI</label>
+                    <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-medical-700 mb-2">Fecha de Nacimiento</label>
+                    <input type="date" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-transparent">
+                </div>
+                <div class="flex space-x-3 pt-4">
+                    <button type="button" onclick="hideModal('shareStudyModal')" class="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="flex-1 px-4 py-3 bg-accent-500 hover:bg-accent-600 text-white rounded-xl transition-colors">
+                        Acceder
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Staff Modals -->
+    <div id="newPatientModal" class="modal fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-medical-800">Nuevo Paciente</h3>
+                <button onclick="hideModal('newPatientModal')" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <form class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-medical-700 mb-2">Nombre Completo</label>
+                    <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-medical-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-medical-700 mb-2">Edad</label>
+                    <input type="number" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-medical-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-medical-700 mb-2">Teléfono</label>
+                    <input type="tel" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-medical-500 focus:border-transparent">
+                </div>
+                <div class="flex space-x-3 pt-4">
+                    <button type="button" onclick="hideModal('newPatientModal')" class="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="flex-1 px-4 py-3 bg-medical-500 hover:bg-medical-600 text-white rounded-xl transition-colors">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // View switching
+        function showPublicView() {
+            document.getElementById('publicView').classList.remove('hidden');
+            document.getElementById('staffView').classList.add('hidden');
+        }
+
+        function showStaffView() {
+            document.getElementById('publicView').classList.add('hidden');
+            document.getElementById('staffView').classList.remove('hidden');
+            showStaffSection('dashboard');
+        }
+
+        // Staff navigation
+        function showStaffSection(sectionId) {
+            // Hide all staff sections
+            const sections = document.querySelectorAll('.staff-section');
+            sections.forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Show selected section
+            document.getElementById('staff-' + sectionId).classList.remove('hidden');
+            
+            // Update navigation buttons
+            const navButtons = document.querySelectorAll('.staff-nav-btn');
+            navButtons.forEach(btn => {
+                btn.classList.remove('text-medical-900', 'font-semibold');
+                btn.classList.add('text-medical-700');
+            });
+            
+            // Highlight active button
+            if (event && event.target) {
+                event.target.classList.remove('text-medical-700');
+                event.target.classList.add('text-medical-900', 'font-semibold');
+            }
+        }
+
+        // Login functionality
+        function login(event) {
+            event.preventDefault();
+            hideModal('loginModal');
+            showStaffView();
+            
+            // Show success notification
+            showNotification('¡Acceso exitoso! Bienvenido al panel médico.', 'success');
+        }
+
+        function logout() {
+            showPublicView();
+            showNotification('Sesión cerrada exitosamente.', 'info');
+        }
+
+        // Modal functionality
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function hideModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Notification system
+        function showNotification(message, type = 'success') {
+            const colors = {
+                success: 'bg-accent-500',
+                error: 'bg-red-500',
+                info: 'bg-medical-500'
+            };
+            
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 ${colors[type]} text-white px-6 py-3 rounded-xl shadow-lg z-50 transform translate-x-full transition-transform`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        // Form submissions
+        document.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const modal = form.closest('.modal');
+            
+            if (modal) {
+                let message = '';
+                
+                if (modal.id === 'appointmentModal') {
+                    message = '¡Cita agendada exitosamente! Te contactaremos pronto.';
+                } else if (modal.id === 'newPatientModal') {
+                    message = '¡Paciente registrado exitosamente!';
+                } else if (modal.id.includes('contact')) {
+                    message = '¡Mensaje enviado! Te responderemos pronto.';
+                } else {
+                    message = '¡Operación completada exitosamente!';
+                }
+                
+                showNotification(message, 'success');
+                hideModal(modal.id);
+                form.reset();
+            }
+        });
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.add('hidden');
+                event.target.classList.remove('flex');
+            }
+        });
+
+        // Smooth scrolling for public navigation
+        document.addEventListener('click', function(event) {
+            if (event.target.tagName === 'A' && event.target.getAttribute('href').startsWith('#')) {
+                event.preventDefault();
+                const targetId = event.target.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            showPublicView();
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'975d7f62a471a776',t:'MTc1NjMxNzkzMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
