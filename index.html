@@ -51,6 +51,26 @@
             background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0);
             background-size: 20px 20px;
         }
+        /* Responsive custom tweaks */
+        @media (max-width: 640px) {
+            h1, h2, h3, h4 {
+                font-size: 1.25rem !important;
+            }
+            .text-5xl { font-size: 2rem !important; }
+            .text-4xl { font-size: 1.5rem !important; }
+            .text-3xl { font-size: 1.25rem !important; }
+            .text-2xl { font-size: 1.1rem !important; }
+            .text-xl { font-size: 1rem !important; }
+            .py-20 { padding-top: 2.5rem !important; padding-bottom: 2.5rem !important; }
+            .px-8 { padding-left: 1rem !important; padding-right: 1rem !important; }
+            .p-8 { padding: 1rem !important; }
+            .rounded-2xl, .rounded-3xl { border-radius: 1rem !important; }
+            .max-w-7xl, .max-w-4xl { max-width: 100vw !important; }
+            .grid-cols-2, .grid-cols-3, .lg\:grid-cols-2, .lg\:grid-cols-3 { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 400px) {
+            .px-4, .sm\:px-6, .lg\:px-8 { padding-left: 0.5rem !important; padding-right: 0.5rem !important; }
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-medical-50 to-blue-50 min-h-screen">
@@ -72,12 +92,51 @@
                         </div>
                     </div>
                     
+
+                    <!-- Responsive nav -->
                     <nav class="hidden md:flex space-x-8">
                         <a href="#inicio" class="text-medical-700 hover:text-medical-900 font-medium transition-colors">Inicio</a>
                         <a href="#servicios" class="text-medical-700 hover:text-medical-900 font-medium transition-colors">Servicios</a>
                         <a href="#citas" class="text-medical-700 hover:text-medical-900 font-medium transition-colors">Turnos</a>
                         <a href="#contacto" class="text-medical-700 hover:text-medical-900 font-medium transition-colors">Sedes</a>
                     </nav>
+                    <!-- Mobile nav button -->
+                    <div class="md:hidden flex items-center">
+                        <button id="mobileMenuBtn" class="text-medical-700 focus:outline-none" aria-label="Abrir menú">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                            </svg>
+                        </button>
+                    </div>
+    <!-- Mobile nav menu -->
+    <!-- Top modal mobile menu -->
+    <div id="mobileMenu" class="fixed inset-0 z-[100] hidden">
+        <div id="mobileMenuBackdrop" class="absolute inset-0 bg-black bg-opacity-40 transition-opacity duration-200"></div>
+        <div class="absolute top-0 left-0 w-full bg-white shadow-2xl rounded-b-2xl animate-slideDown">
+            <div class="flex justify-end p-4">
+                <button id="closeMobileMenu" class="text-medical-700" aria-label="Cerrar menú">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <nav class="flex flex-col items-center gap-8 py-8">
+                <a href="#inicio" class="text-medical-700 text-2xl font-bold tracking-wide" onclick="closeMobileMenu()">Inicio</a>
+                <a href="#servicios" class="text-medical-700 text-2xl font-bold tracking-wide" onclick="closeMobileMenu()">Servicios</a>
+                <a href="#citas" class="text-medical-700 text-2xl font-bold tracking-wide" onclick="closeMobileMenu()">Turnos</a>
+                <a href="#contacto" class="text-medical-700 text-2xl font-bold tracking-wide" onclick="closeMobileMenu()">Sedes</a>
+            </nav>
+        </div>
+        <style>
+            @keyframes slideDown {
+                from { transform: translateY(-100%); }
+                to { transform: translateY(0); }
+            }
+            .animate-slideDown {
+                animation: slideDown 0.25s cubic-bezier(0.4,0,0.2,1);
+            }
+        </style>
+    </div>
 
                     <div class="flex items-center space-x-4">
                         <button onclick="showModal('loginModal')" class="bg-medical-500 hover:bg-medical-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
@@ -891,6 +950,34 @@
     </div>
 
     <script>
+        // Mobile menu logic
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const closeMobileMenuBtn = document.getElementById('closeMobileMenu');
+        if (mobileMenuBtn && mobileMenu && closeMobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            });
+            closeMobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.add('hidden');
+                document.body.style.overflow = '';
+            });
+            // Cerrar al hacer click en el fondo oscuro
+            const backdrop = document.getElementById('mobileMenuBackdrop');
+            if (backdrop) {
+                backdrop.addEventListener('click', function() {
+                    mobileMenu.classList.add('hidden');
+                    document.body.style.overflow = '';
+                });
+            }
+        }
+        function closeMobileMenu() {
+            if (mobileMenu) {
+                mobileMenu.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        }
         // View switching
         function showPublicView() {
             document.getElementById('publicView').classList.remove('hidden');
@@ -1017,7 +1104,7 @@
             }
         });
 
-        // Smooth scrolling for public navigation
+        // Smooth scrolling for public navigation (incluye mobile)
         document.addEventListener('click', function(event) {
             if (event.target.tagName === 'A' && event.target.getAttribute('href').startsWith('#')) {
                 event.preventDefault();
@@ -1026,6 +1113,7 @@
                 if (targetElement) {
                     targetElement.scrollIntoView({ behavior: 'smooth' });
                 }
+                closeMobileMenu();
             }
         });
 
